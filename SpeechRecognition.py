@@ -1,21 +1,13 @@
 # Imports
 import speech_recognition as sr
+# make a no function
+with open('fullscript.txt', 'w') as script:
+    script.truncate()
+with open('speech.txt', 'w') as speech:
+    speech.truncate()
+x = 0
 # Define your variable
 r = sr.Recognizer()
-# define the no function
-def no():
-    with sr.Microphone(int(micindex)) as source:
-        audio = r.listen(source)
-
-        try:
-            text = r.recognize_google(audio)
-            if(text != None):
-                splittext = text.split(" ")
-                print('\n'.join(map(str, splittext)))
-                no()
-            no()
-        except sr.UnknownValueError:
-            no()
 # list the microphones
 mics = sr.Microphone.list_microphone_names()
 num = mics.index("Microsoft Sound Mapper - Output")
@@ -52,7 +44,27 @@ if(ans == "no"):
     ans = input()
 if(ans == 'yes'):
     try:
-        no()
+        x = 1
     except ValueError:
-        no()
+        x = 1
 
+while x == 1:
+    with sr.Microphone(int(micindex)) as source:
+        r.adjust_for_ambient_noise(source, duration=1)
+        while True:
+            audio = r.listen(source)
+
+            try:
+                text = r.recognize_google(audio)
+                if(text != None):
+                    print(text)
+                    with open('speech.txt', 'w') as speech:
+                        speech.write(text)
+                    with open("fullscript.txt", 'a') as script:
+                        script.write(text + '\n')
+                    x = 1
+                x = 1
+            except sr.UnknownValueError:
+                x = 1
+            
+                
