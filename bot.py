@@ -7,12 +7,12 @@ from irc.bot import SingleServerIRCBot
 HOST = 'irc.twitch.tv'
 PORT = 6667
 USERNAME = 'WasteofCode'
-PASSWORD = 'oauth:toap5fuzmckqzp20qd7lz9r8nrvbjq'  # http://www.twitchapps.com/tmi/
+PASSWORD = 'oauth:#'  # http://www.twitchapps.com/tmi/
 CHANNEL = '#wasteofspacety'
 poopwords = []
 
 def _get_logger():
-    logger_name = 'vbot'
+    logger_name = 'Beffrey'
     logger_level = logging.DEBUG
     log_line_format = '%(asctime)s | %(name)s - %(levelname)s : %(message)s'
     log_line_date_format = '%Y-%m-%dT%H:%M:%SZ'
@@ -28,23 +28,23 @@ def _get_logger():
 logger = _get_logger()
 
 
-class VBot(SingleServerIRCBot):
+class Beffrey(SingleServerIRCBot):
 
     VERSION = '1.0.0'
 
     def __init__(self, host, port, nickname, password, channel):
-        logger.debug('VBot.__init__ (VERSION = %r)', self.VERSION)
+        logger.debug('Beffrey.__init__ (VERSION = %r)', self.VERSION)
         SingleServerIRCBot.__init__(self, [(host, port, password)], nickname, nickname)
         self.channel = channel
         self.viewers = []
 
     def on_welcome(self, connection, event):
-        logger.debug('VBot.on_welcome')
+        logger.debug('Beffrey.on_welcome')
         connection.join(self.channel)
         connection.privmsg(event.target, 'Hello world!')
 
     def on_join(self, connection, event):
-        logger.debug('VBot.on_join')
+        logger.debug('Beffrey.on_join')
         nickname = self._parse_nickname_from_twitch_user_id(event.source)
         self.viewers.append(nickname)
         print(nickname)
@@ -53,13 +53,13 @@ class VBot(SingleServerIRCBot):
             True
 
     def on_part(self, connection, event):
-        logger.debug('VBot.on_part')
+        logger.debug('Beffrey.on_part')
         nickname = self._parse_nickname_from_twitch_user_id(event.source)
         print(nickname)
         self.viewers.remove(nickname)
 
     def on_pubmsg(self, connection, event):
-        logger.debug('VBot.on_pubmsg')
+        logger.debug('Beffrey.on_pubmsg')
         message = event.arguments[0]
         if(message.startswith("!") == True):
             splitmessage = message.split('!')
@@ -83,7 +83,7 @@ class VBot(SingleServerIRCBot):
             self.do_command(event, message_parts[1].strip())
 
     def do_command(self, event, command):
-        logger.debug('VBot.do_command (command = %r)', command)
+        logger.debug('Beffrey.do_command (command = %r)', command)
 
         if command == "version":
             version_message = 'Version: %s' % self.VERSION
@@ -104,7 +104,7 @@ class VBot(SingleServerIRCBot):
 
 
 def main():
-    my_bot = VBot(HOST, PORT, USERNAME, PASSWORD, CHANNEL)
+    my_bot = Beffrey(HOST, PORT, USERNAME, PASSWORD, CHANNEL)
     my_bot.start()
 
 
