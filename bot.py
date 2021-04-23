@@ -6,9 +6,9 @@ from irc.bot import SingleServerIRCBot
 # config
 HOST = 'irc.twitch.tv'
 PORT = 6667
-USERNAME = 'WasteofCode'
+USERNAME = 'user' # add bot name here
 PASSWORD = 'oauth:#'  # http://www.twitchapps.com/tmi/
-CHANNEL = '#wasteofspacety'
+CHANNEL = '#' # add your channel name after the hashtag
 poopwords = []
 
 def _get_logger():
