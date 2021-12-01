@@ -98,7 +98,6 @@ while x == 1:
                         with open('blacklist.txt', 'r') as blacklist:
                             blklst = blacklist.readlines()
                             listsep = blklst[0].split(" ")
-                            print(listsep)
                             if(listsep.__contains__(word)):
                                 print('Your mom dosent love you')      
                     
